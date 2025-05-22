@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Our 3-Month Journey</title>
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand&family=Amatic+SC&display=swap"
     rel="stylesheet">
@@ -40,7 +40,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: white;
+      background: #fff;
       border-radius: 10px;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
       display: flex;
@@ -217,39 +217,33 @@
       transform: scale(1.1)
     }
 
-    .gift-content {
-      margin-top: 20px;
-      opacity: 0;
+    /* Lightbox */
+    #lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
       display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
+      align-items: center;
       justify-content: center;
-      transition: opacity .8s ease;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity .3s;
+      z-index: 2000;
     }
 
-    .gift-content.open {
-      opacity: 1
+    #lightbox.open {
+      visibility: visible;
+      opacity: 1;
     }
 
-    .gift-content img {
-      width: 80px;
-      height: 80px;
-      object-fit: cover;
+    #lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
       border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      animation: float 2s infinite ease-in-out;
-    }
-
-    @keyframes float {
-
-      0%,
-      100% {
-        transform: translateY(0)
-      }
-
-      50% {
-        transform: translateY(-8px)
-      }
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
     }
 
     .controls {
@@ -366,10 +360,8 @@
 </head>
 
 <body>
-
   <div class="book" id="book">
-    <!-- 1: Cover -->
-    <div class="page" id="p1">
+    <div class="page">
       <h1>Our 3-Month Journey</h1>
       <p class="subtitle">For Cutie Pie Raveena Sharma</p>
       <div class="cartoon">
@@ -380,65 +372,51 @@
         </div>
       </div>
     </div>
-    <!-- 2: Ch1 Title -->
-    <div class="page" id="p2">
+    <div class="page">
       <h1>Chapter 1</h1>
       <p class="subtitle">The First Hello</p>
     </div>
-    <!-- 3: Ch1 Content -->
-    <div class="page" id="p3">
+    <div class="page">
       <p class="text">
         From that very first “hello,” something inside me knew you were extraordinary.
         Your warmth felt like coming home in a world that once seemed so big and uncertain.
       </p>
     </div>
-    <!-- 4: Ch2 Title -->
-    <div class="page" id="p4">
+    <div class="page">
       <h1>Chapter 2</h1>
       <p class="subtitle">Your Laughter</p>
     </div>
-    <!-- 5: Ch2 Content -->
-    <div class="page" id="p5">
+    <div class="page">
       <p class="text">
         Your laughter is the sweetest melody I’ve ever heard.
         Even on the toughest days, your giggle brightens everything around me.
       </p>
     </div>
-    <!-- 6: Ch3 Title -->
-    <div class="page" id="p6">
+    <div class="page">
       <h1>Chapter 3</h1>
       <p class="subtitle">Growing Together</p>
     </div>
-    <!-- 7: Ch3 Content -->
-    <div class="page" id="p7">
+    <div class="page">
       <p class="text">
         You inspire me to be better every day. Through your kindness I’ve found patience,
         and through your dreams I’ve found purpose. You make me believe anything is possible.
       </p>
     </div>
-    <!-- 8: Ch4 Title -->
-    <div class="page" id="p8">
+    <div class="page">
       <h1>Chapter 4</h1>
       <p class="subtitle">Dreams Ahead</p>
     </div>
-    <!-- 9: Final Content -->
-    <div class="page" id="p9">
+    <div class="page">
       <p class="text">
         I dream of growing old with you—laughing, learning, loving side by side.
         Every single moment with you has been special.
       </p>
       <p class="ilove">I love u ❤️</p>
     </div>
-    <!-- 10: Surprise Gift -->
-    <div class="page" id="p10">
+    <div class="page">
       <h1>Surprise!</h1>
       <p class="subtitle">A Special Gift for You</p>
-      <div class="gift-box" onclick="openGift()">🎁</div>
-      <div id="giftContent" class="gift-content">
-        <img src="https://source.unsplash.com/200x200/?bouquet" alt="Bouquet">
-        <img src="https://source.unsplash.com/200x200/?roses" alt="Roses">
-        <img src="https://source.unsplash.com/200x200/?flowers" alt="Flowers">
-      </div>
+      <div class="gift-box" onclick="openLightbox()">🎁</div>
     </div>
   </div>
 
@@ -450,31 +428,31 @@
   <div class="flowers"></div>
   <div class="hearts"></div>
 
+  <!-- lightbox and audio -->
+  <div id="lightbox" onclick="closeLightbox()">
+    <img src="img.png" alt="Special Surprise">
+  </div>
+  <audio id="giftAudio" src="song.mp3"></audio>
+
   <script>
     const pages = document.querySelectorAll('.page');
     const prevBtn = document.getElementById('prev');
     const nextBtn = document.getElementById('next');
-    let current = 0;
+    const audio = document.getElementById('giftAudio');
+    let idx = 0;
 
     function updateButtons() {
-      prevBtn.disabled = current === 0;
-      nextBtn.disabled = current === pages.length;
+      prevBtn.disabled = idx === 0;
+      nextBtn.disabled = idx === pages.length;
     }
 
     nextBtn.addEventListener('click', () => {
-      if (current < pages.length) {
-        pages[current].classList.add('flipped');
-        current++;
-        updateButtons();
-      }
+      if (idx < pages.length) pages[idx++].classList.add('flipped');
+      updateButtons();
     });
-
     prevBtn.addEventListener('click', () => {
-      if (current > 0) {
-        current--;
-        pages[current].classList.remove('flipped');
-        updateButtons();
-      }
+      if (idx > 0) pages[--idx].classList.remove('flipped');
+      updateButtons();
     });
 
     document.addEventListener('keydown', e => {
@@ -485,37 +463,41 @@
     // swipe support
     let startX = 0;
     const book = document.getElementById('book');
-    book.addEventListener('touchstart', e => {
-      startX = e.changedTouches[0].screenX;
-    });
+    book.addEventListener('touchstart', e => startX = e.changedTouches[0].screenX);
     book.addEventListener('touchend', e => {
       const diff = e.changedTouches[0].screenX - startX;
       if (diff < -30) nextBtn.click();
       if (diff > 30) prevBtn.click();
     });
 
-    function openGift() {
-      document.getElementById('giftContent').classList.add('open');
+    // lightbox & audio controls
+    const lb = document.getElementById('lightbox');
+    function openLightbox() {
+      lb.classList.add('open');
+      audio.currentTime = 61;  // start at 1:01
+      audio.play();
+    }
+    function closeLightbox() {
+      lb.classList.remove('open');
+      audio.pause();
     }
 
-    // petals
+    // petals & hearts
     for (let i = 0; i < 50; i++) {
       const p = document.createElement('div');
       p.className = 'petal';
       p.style.left = Math.random() * 100 + 'vw';
       p.style.animationDuration = (4 + Math.random() * 4) + 's';
       p.style.animationDelay = Math.random() * 2 + 's';
-      document.querySelector('.flowers').appendChild(p);
+      document.querySelector('.flowers').append(p);
     }
-
-    // hearts
     for (let i = 0; i < 40; i++) {
       const h = document.createElement('div');
       h.className = 'heart';
       h.style.left = Math.random() * 100 + 'vw';
       h.style.animationDuration = (3 + Math.random() * 3) + 's';
       h.style.animationDelay = Math.random() * 1 + 's';
-      document.querySelector('.hearts').appendChild(h);
+      document.querySelector('.hearts').append(h);
     }
 
     updateButtons();
