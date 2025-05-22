@@ -46,7 +46,8 @@
     .book {
       position: relative;
       width: 92vw;
-      height: 65vh;
+      height: 75vh;
+      /* Increased height for better text display */
       max-width: 380px;
       perspective: 2000px;
       margin-top: 20px;
@@ -61,7 +62,8 @@
       width: 100%;
       height: 100%;
       background: #fff;
-      border-radius: 12px;
+      border-radius: 5px 12px 12px 5px;
+      /* Book-like rounded corners */
       box-shadow: 0 8px 25px rgba(233, 30, 99, 0.2);
       display: flex;
       flex-direction: column;
@@ -70,9 +72,10 @@
       padding: 20px;
       backface-visibility: hidden;
       transform-origin: left center;
-      transition: transform 0.7s cubic-bezier(0.18, 0.89, 0.32, 1.28), box-shadow 0.3s ease;
+      transition: transform 0.8s cubic-bezier(0.18, 0.89, 0.32, 1.28);
       overflow: hidden;
       box-sizing: border-box;
+      transform-style: preserve-3d;
     }
 
     .page::before {
@@ -84,6 +87,12 @@
       height: 100%;
       background: linear-gradient(135deg, rgba(255, 235, 238, 0.3) 0%, rgba(255, 209, 220, 0.2) 100%);
       z-index: -1;
+    }
+
+    /* Right page styling */
+    .page.right-page {
+      border-radius: 12px 5px 5px 12px;
+      transform-origin: right center;
     }
 
     /* stacking order */
@@ -127,8 +136,13 @@
       z-index: 1;
     }
 
-    .page.flipped {
+    .page.flipped-left {
       transform: rotateY(-180deg);
+      visibility: hidden;
+    }
+
+    .page.flipped-right {
+      transform: rotateY(180deg);
       visibility: hidden;
     }
 
@@ -137,7 +151,7 @@
       font-family: 'Dancing Script', cursive;
       font-size: 2.2rem;
       color: var(--accent);
-      margin: 10px 0;
+      margin: 10px 0 5px 0;
       text-align: center;
       animation: fadeIn 0.8s ease;
       text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
@@ -171,7 +185,7 @@
       line-height: 1.7;
       color: var(--text);
       text-align: center;
-      margin: 5px 0;
+      margin: 8px 0;
       animation: fadeIn 1.2s ease;
       padding: 0 5px;
     }
@@ -686,7 +700,8 @@
     /* very small screens */
     @media (max-height: 600px) {
       .book {
-        height: 60vh;
+        height: 70vh;
+        /* Even taller on small screens */
       }
 
       h1 {
@@ -725,7 +740,7 @@
     <div class="nav-zone left"><span class="arrow">❮</span></div>
     <div class="nav-zone right"><span class="arrow">❯</span></div>
 
-    <div class="page">
+    <div class="page right-page">
       <div class="corner-heart top-left">❤️</div>
       <div class="corner-heart top-right">❤️</div>
       <div class="corner-heart bottom-left">❤️</div>
@@ -765,7 +780,7 @@
       </div>
     </div>
 
-    <div class="page">
+    <div class="page right-page">
       <h1>Chapter 1</h1>
       <p class="subtitle">The Beginning of Us</p>
       <div class="text-container">
@@ -799,7 +814,7 @@
       </div>
     </div>
 
-    <div class="page">
+    <div class="page right-page">
       <h1>Chapter 2</h1>
       <p class="subtitle">Our Special Moments</p>
       <div class="text-container">
@@ -846,7 +861,7 @@
       </div>
     </div>
 
-    <div class="page">
+    <div class="page right-page">
       <h1>Chapter 4</h1>
       <p class="subtitle">Dreaming of Our Future</p>
       <i class="fas fa-star page-icon"></i>
@@ -918,9 +933,25 @@
     // Initialize first dot as active
     dots[0].classList.add('active');
 
+    // Set initial page classes for proper flipping
+    function setInitialPageClasses() {
+      pages.forEach((page, index) => {
+        if (index % 2 === 0) {
+          page.classList.add('right-page');
+        } else {
+          page.classList.remove('right-page');
+        }
+      });
+    }
+    setInitialPageClasses();
+
     function flipNext() {
       if (idx < pages.length - 1) {
-        pages[idx].classList.add('flipped');
+        if (pages[idx].classList.contains('right-page')) {
+          pages[idx].classList.add('flipped-left');
+        } else {
+          pages[idx].classList.add('flipped-right');
+        }
         idx++;
         updateDots();
       }
@@ -929,7 +960,11 @@
     function flipPrev() {
       if (idx > 0) {
         idx--;
-        pages[idx].classList.remove('flipped');
+        if (pages[idx].classList.contains('right-page')) {
+          pages[idx].classList.remove('flipped-left');
+        } else {
+          pages[idx].classList.remove('flipped-right');
+        }
         updateDots();
       }
     }
@@ -943,7 +978,7 @@
     rightZone.addEventListener('click', flipNext);
     leftZone.addEventListener('click', flipPrev);
 
-    // Improved swipe support
+    // Improved swipe support with proper book flipping
     let startX = 0;
     let isSwiping = false;
     const book = document.getElementById('book');
@@ -1127,9 +1162,9 @@
       // Adjust book height based on screen
       const book = document.querySelector('.book');
       if (window.innerHeight < 600) {
-        book.style.height = '55vh';
+        book.style.height = '70vh';
       } else {
-        book.style.height = '65vh';
+        book.style.height = '75vh';
       }
     }
 
@@ -1137,25 +1172,34 @@
     window.addEventListener('orientationchange', adjustViewport);
     adjustViewport();
 
-    // Ensure all pages are properly aligned
-    function checkPageContentFit() {
-      pages.forEach(page => {
-        const textContainer = page.querySelector('.text-container');
-        if (textContainer) {
-          const contentHeight = textContainer.scrollHeight;
-          const containerHeight = textContainer.clientHeight;
+    // Ensure all text fits properly
+    function checkTextFit() {
+      const textContainers = document.querySelectorAll('.text-container');
 
-          if (contentHeight > containerHeight) {
-            textContainer.style.justifyContent = 'flex-start';
-          } else {
-            textContainer.style.justifyContent = 'center';
-          }
+      textContainers.forEach(container => {
+        const contentHeight = container.scrollHeight;
+        const containerHeight = container.clientHeight;
+
+        if (contentHeight > containerHeight) {
+          // If content overflows, make container scrollable
+          container.style.justifyContent = 'flex-start';
+          container.style.overflowY = 'auto';
+        } else {
+          // If content fits, center it
+          container.style.justifyContent = 'center';
+          container.style.overflowY = 'hidden';
         }
       });
     }
 
-    // Run check after short delay to allow rendering
-    setTimeout(checkPageContentFit, 300);
+    // Run checks after short delay to allow rendering
+    setTimeout(() => {
+      adjustViewport();
+      checkTextFit();
+    }, 300);
+
+    // Also check when window resizes
+    window.addEventListener('resize', checkTextFit);
   </script>
 </body>
 
