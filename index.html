@@ -27,29 +27,31 @@
       width: 100%;
       height: 100%;
       touch-action: manipulation;
-      overflow-y: auto;
+      overflow-x: hidden;
       background: linear-gradient(135deg, #fff5f7, #ffeef0);
       font-family: 'Quicksand', sans-serif;
       color: var(--text);
+      -webkit-text-size-adjust: 100%;
     }
 
     body {
       display: flex;
       flex-direction: column;
       align-items: center;
-      overflow-x: hidden;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     /* —— Flip-book container —— */
     .book {
       position: relative;
-      width: 90vw;
-      height: 70vh;
-      max-width: 400px;
-      max-height: 500px;
+      width: 92vw;
+      height: 65vh;
+      max-width: 380px;
       perspective: 2000px;
-      margin-top: 30px;
+      margin-top: 20px;
       z-index: 10;
+      touch-action: pan-y;
     }
 
     .page {
@@ -59,17 +61,18 @@
       width: 100%;
       height: 100%;
       background: #fff;
-      border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(233, 30, 99, 0.2);
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(233, 30, 99, 0.2);
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
-      padding: 30px;
+      padding: 20px;
       backface-visibility: hidden;
       transform-origin: left center;
-      transition: transform .8s cubic-bezier(0.18, 0.89, 0.32, 1.28), box-shadow .3s ease;
+      transition: transform 0.7s cubic-bezier(0.18, 0.89, 0.32, 1.28), box-shadow 0.3s ease;
       overflow: hidden;
+      box-sizing: border-box;
     }
 
     .page::before {
@@ -129,47 +132,55 @@
       visibility: hidden;
     }
 
-    .page:hover {
-      transform: scale(1.02);
-      box-shadow: 0 15px 40px rgba(233, 30, 99, 0.3);
-    }
-
     /* typography + animations */
     h1 {
       font-family: 'Dancing Script', cursive;
-      font-size: 2.5em;
+      font-size: 2.2rem;
       color: var(--accent);
-      margin-bottom: 10px;
+      margin: 10px 0;
       text-align: center;
       animation: fadeIn 0.8s ease;
       text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+      line-height: 1.2;
     }
 
     .subtitle {
       font-family: 'Amatic SC', cursive;
-      font-size: 1.8em;
+      font-size: 1.6rem;
       font-weight: bold;
       color: var(--secondary);
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       text-align: center;
       animation: fadeIn 1s ease;
     }
 
+    .text-container {
+      width: 100%;
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 0 5px;
+      margin: 5px 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
     .text {
-      font-size: 1.1em;
-      line-height: 1.8;
+      font-size: 1rem;
+      line-height: 1.7;
       color: var(--text);
       text-align: center;
-      margin-top: 10px;
+      margin: 5px 0;
       animation: fadeIn 1.2s ease;
-      padding: 0 15px;
+      padding: 0 5px;
     }
 
     .ilove {
       font-family: 'Pacifico', cursive;
-      font-size: 2em;
+      font-size: 1.8rem;
       color: var(--accent);
-      margin-top: 30px;
+      margin: 15px 0;
       animation: beat 1s infinite, fadeIn 1.4s ease;
       text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
     }
@@ -177,7 +188,7 @@
     @keyframes fadeIn {
       from {
         opacity: 0;
-        transform: translateY(20px)
+        transform: translateY(15px)
       }
 
       to {
@@ -198,11 +209,11 @@
       }
     }
 
-    /* cartoon on cover */
+    /* couple avatar */
     .couple-avatar {
-      width: 180px;
-      height: 180px;
-      margin: 20px 0;
+      width: 160px;
+      height: 160px;
+      margin: 10px 0;
       position: relative;
       display: flex;
       justify-content: center;
@@ -210,8 +221,8 @@
     }
 
     .avatar {
-      width: 80px;
-      height: 80px;
+      width: 70px;
+      height: 70px;
       background: #ffe0b2;
       border-radius: 50%;
       border: 3px solid #ffab91;
@@ -220,51 +231,51 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
     }
 
     .avatar.male {
-      margin-right: -15px;
+      margin-right: -12px;
       z-index: 2;
     }
 
     .avatar.female {
-      margin-left: -15px;
+      margin-left: -12px;
       background: #ffcdd2;
       border-color: #f48fb1;
     }
 
     .eye {
-      width: 12px;
-      height: 12px;
+      width: 10px;
+      height: 10px;
       background: #333;
       border-radius: 50%;
       position: absolute;
-      top: 30px;
+      top: 25px;
       animation: blink 5s infinite;
     }
 
     .eye.left {
-      left: 18px
+      left: 15px
     }
 
     .eye.right {
-      right: 18px
+      right: 15px
     }
 
     .smile {
-      width: 40px;
-      height: 20px;
+      width: 35px;
+      height: 18px;
       border-bottom: 3px solid #d84315;
       border-radius: 0 0 50px 50px;
       position: absolute;
-      bottom: 20px;
+      bottom: 18px;
     }
 
     .heart-between {
       position: absolute;
       color: var(--accent);
-      font-size: 2em;
+      font-size: 1.8em;
       z-index: 3;
       animation: float 3s ease-in-out infinite;
     }
@@ -277,7 +288,7 @@
       60%,
       80%,
       100% {
-        height: 12px
+        height: 10px
       }
 
       10%,
@@ -297,11 +308,11 @@
       }
 
       50% {
-        transform: translateY(-10px) scale(1.1)
+        transform: translateY(-8px) scale(1.1)
       }
     }
 
-    /* tap-zones with arrows */
+    /* navigation */
     .nav-zone {
       position: absolute;
       top: 0;
@@ -323,19 +334,18 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      font-size: 2.5em;
+      font-size: 2.2rem;
       color: rgba(233, 30, 99, 0.7);
       animation: pulse 1.5s infinite;
       pointer-events: none;
-      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
 
     .nav-zone.left .arrow {
-      left: 15px
+      left: 12px
     }
 
     .nav-zone.right .arrow {
-      right: 15px
+      right: 12px
     }
 
     @keyframes pulse {
@@ -346,20 +356,20 @@
       }
 
       50% {
-        transform: translateY(-50%) scale(1.3)
+        transform: translateY(-50%) scale(1.2)
       }
     }
 
-    /* gift-card below book */
+    /* gift card */
     .gift-card {
       background: #fff;
-      border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(233, 30, 99, 0.2);
-      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(233, 30, 99, 0.2);
+      padding: 20px;
       text-align: center;
-      width: 90vw;
-      max-width: 400px;
-      margin: 30px auto 50px;
+      width: 92vw;
+      max-width: 380px;
+      margin: 20px auto 40px;
       animation: slideUp 0.8s ease both;
       position: relative;
       overflow: hidden;
@@ -380,7 +390,7 @@
     @keyframes slideUp {
       from {
         opacity: 0;
-        transform: translateY(30px)
+        transform: translateY(25px)
       }
 
       to {
@@ -392,42 +402,42 @@
     .gift-card h2 {
       font-family: 'Dancing Script', cursive;
       color: var(--accent);
-      margin-bottom: 15px;
-      font-size: 2em;
+      margin-bottom: 12px;
+      font-size: 1.8rem;
       animation: fadeIn 1s ease;
     }
 
     .gift-box {
-      font-size: 4em;
+      font-size: 3.5rem;
       cursor: pointer;
       user-select: none;
-      transition: all .3s;
+      transition: all 0.3s;
       animation: fadeIn 1.2s ease, float 3s ease-in-out infinite;
       display: inline-block;
-      text-shadow: 0 5px 15px rgba(233, 30, 99, 0.4);
     }
 
     .gift-box:hover {
-      transform: rotate(-15deg) scale(1.2);
+      transform: rotate(-12deg) scale(1.15);
       animation: none;
     }
 
-    /* lightbox & audio */
+    /* lightbox */
     #lightbox {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.9);
+      background: rgba(0, 0, 0, 0.95);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       visibility: hidden;
       opacity: 0;
-      transition: opacity .3s;
+      transition: opacity 0.3s;
       z-index: 2000;
+      touch-action: manipulation;
     }
 
     #lightbox.open {
@@ -437,24 +447,96 @@
 
     #lightbox img {
       max-width: 90vw;
-      max-height: 70vh;
-      border-radius: 15px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+      max-height: 60vh;
+      border-radius: 12px;
+      box-shadow: 0 8px 35px rgba(0, 0, 0, 0.6);
       animation: fadeIn 0.6s ease;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
+      -webkit-touch-callout: none;
     }
 
     .lightbox-text {
       color: white;
       font-family: 'Dancing Script', cursive;
-      font-size: 2em;
+      font-size: 1.8rem;
       text-align: center;
-      max-width: 80%;
-      margin-top: 20px;
+      max-width: 85%;
+      margin-top: 15px;
       text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+      padding: 0 10px;
     }
 
-    /* petals & hearts */
+    /* decorative elements */
+    .corner-heart {
+      position: absolute;
+      font-size: 2.5rem;
+      color: var(--accent);
+      opacity: 0.2;
+    }
+
+    .top-left {
+      top: 8px;
+      left: 8px
+    }
+
+    .top-right {
+      top: 8px;
+      right: 8px
+    }
+
+    .bottom-left {
+      bottom: 8px;
+      left: 8px
+    }
+
+    .bottom-right {
+      bottom: 8px;
+      right: 8px
+    }
+
+    /* progress dots */
+    .progress-dots {
+      display: flex;
+      justify-content: center;
+      margin: 10px 0;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ccc;
+      transition: all 0.3s ease;
+    }
+
+    .dot.active {
+      background: var(--accent);
+      transform: scale(1.2);
+    }
+
+    /* music player */
+    .music-player {
+      position: fixed;
+      bottom: 15px;
+      right: 15px;
+      width: 45px;
+      height: 45px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+      z-index: 100;
+      cursor: pointer;
+      color: var(--accent);
+      font-size: 1.3rem;
+      animation: pulse 2s infinite;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* floating elements */
     .flowers,
     .hearts {
       position: fixed;
@@ -468,14 +550,13 @@
 
     .petal {
       position: absolute;
-      width: 15px;
-      height: 15px;
+      width: 12px;
+      height: 12px;
       background: #ff80ab;
       border-radius: 50% 50% 0 50%;
       transform: rotate(45deg);
-      opacity: .8;
+      opacity: 0.8;
       animation: fall linear infinite;
-      filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.1));
     }
 
     @keyframes fall {
@@ -492,39 +573,38 @@
 
     .heart {
       position: absolute;
-      width: 20px;
-      height: 20px;
+      width: 16px;
+      height: 16px;
       background: var(--accent);
       transform: rotate(45deg);
-      opacity: .7;
+      opacity: 0.7;
       animation: floatUp ease-in-out infinite;
-      filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.1));
     }
 
     .heart::before,
     .heart::after {
       content: '';
       position: absolute;
-      width: 20px;
-      height: 20px;
+      width: 16px;
+      height: 16px;
       background: var(--accent);
       border-radius: 50%;
     }
 
     .heart::before {
-      top: -10px;
+      top: -8px;
       left: 0
     }
 
     .heart::after {
-      left: -10px;
+      left: -8px;
       top: 0
     }
 
     @keyframes floatUp {
       0% {
         bottom: -20px;
-        opacity: .8;
+        opacity: 0.8;
         transform: translateX(0) rotate(45deg)
       }
 
@@ -534,101 +614,17 @@
 
       100% {
         bottom: 110vh;
-        transform: translateX(60px) rotate(45deg);
+        transform: translateX(40px) rotate(45deg);
         opacity: 0
       }
-    }
-
-    /* decorative elements */
-    .page-decoration {
-      position: absolute;
-      opacity: 0.1;
-      z-index: -1;
-    }
-
-    .corner-heart {
-      position: absolute;
-      font-size: 3em;
-      color: var(--accent);
-      opacity: 0.2;
-    }
-
-    .top-left {
-      top: 10px;
-      left: 10px
-    }
-
-    .top-right {
-      top: 10px;
-      right: 10px
-    }
-
-    .bottom-left {
-      bottom: 10px;
-      left: 10px
-    }
-
-    .bottom-right {
-      bottom: 10px;
-      right: 10px
-    }
-
-    /* progress dots */
-    .progress-dots {
-      display: flex;
-      justify-content: center;
-      margin-top: 20px;
-      gap: 10px;
-    }
-
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #ccc;
-      transition: all 0.3s ease;
-    }
-
-    .dot.active {
-      background: var(--accent);
-      transform: scale(1.3);
-    }
-
-    /* music player */
-    .music-player {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 50px;
-      height: 50px;
-      background: white;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      z-index: 100;
-      cursor: pointer;
-      color: var(--accent);
-      font-size: 1.5em;
-      animation: pulse 2s infinite;
-    }
-
-    /* confetti */
-    .confetti {
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      background: var(--accent);
-      opacity: 0;
     }
 
     /* memory gallery */
     .memory-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      margin-top: 20px;
+      gap: 8px;
+      margin: 10px 0;
       width: 100%;
     }
 
@@ -636,15 +632,15 @@
       width: 100%;
       height: 0;
       padding-bottom: 100%;
-      border-radius: 10px;
+      border-radius: 8px;
       overflow: hidden;
       position: relative;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s ease;
     }
 
     .memory-item:hover {
-      transform: scale(1.05);
+      transform: scale(1.03);
     }
 
     .memory-item img {
@@ -654,28 +650,68 @@
       object-fit: cover;
     }
 
-    /* responsive adjustments */
-    @media (max-width: 500px) {
+    /* icons */
+    .page-icon {
+      font-size: 2.8rem;
+      color: var(--accent);
+      margin: 10px 0;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    /* confetti */
+    .confetti {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* scrollbar for text */
+    .text-container::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .text-container::-webkit-scrollbar-track {
+      background: rgba(255, 107, 139, 0.1);
+      border-radius: 2px;
+    }
+
+    .text-container::-webkit-scrollbar-thumb {
+      background: rgba(255, 107, 139, 0.3);
+      border-radius: 2px;
+    }
+
+    /* very small screens */
+    @media (max-height: 600px) {
+      .book {
+        height: 60vh;
+      }
+
       h1 {
-        font-size: 2em;
+        font-size: 1.8rem;
+        margin: 5px 0;
       }
 
       .subtitle {
-        font-size: 1.5em;
+        font-size: 1.4rem;
+        margin-bottom: 8px;
       }
 
       .text {
-        font-size: 1em;
+        font-size: 0.9rem;
       }
 
       .couple-avatar {
-        width: 150px;
-        height: 150px;
+        width: 130px;
+        height: 130px;
+        margin: 8px 0;
       }
 
       .avatar {
-        width: 70px;
-        height: 70px;
+        width: 60px;
+        height: 60px;
       }
     }
   </style>
@@ -712,12 +748,15 @@
         </div>
       </div>
 
-      <p class="text">Every moment with you has been magical</p>
+      <div class="text-container">
+        <p class="text">Every moment with you has been more magical than I could have ever imagined</p>
+      </div>
     </div>
 
     <div class="page">
       <h1>Chapter 1</h1>
-      <p class="subtitle">The First Hello</p>
+      <p class="subtitle">21st February - My Favorite Day</p>
+      <i class="fas fa-calendar-day page-icon"></i>
       <div class="memory-grid">
         <div class="memory-item" style="background: #ffcdd2;"></div>
         <div class="memory-item" style="background: #f8bbd0;"></div>
@@ -727,10 +766,18 @@
     </div>
 
     <div class="page">
-      <p class="text">
-        From that very first "hello," something inside me knew you were extraordinary.
-        Your warmth felt like coming home in a world that once seemed so big and uncertain.
-      </p>
+      <h1>Chapter 1</h1>
+      <p class="subtitle">The Beginning of Us</p>
+      <div class="text-container">
+        <p class="text">
+          The day I first saw you, heard your voice, and met you - 21st February became my favorite day. I didn't know
+          then that you'd become my favorite person in the world.
+        </p>
+        <p class="text">
+          I quickly came to know how much you love flowers, and how sweet and cute you truly are. Our phone calls were
+          so special, and meeting every day for lunch became the highlight of my days.
+        </p>
+      </div>
       <div class="progress-dots">
         <div class="dot"></div>
         <div class="dot active"></div>
@@ -742,16 +789,30 @@
 
     <div class="page">
       <h1>Chapter 2</h1>
-      <p class="subtitle">Your Laughter</p>
-      <i class="fas fa-heart"
-        style="font-size: 3em; color: var(--accent); margin: 15px 0; animation: beat 1s infinite;"></i>
+      <p class="subtitle">Growing Through Challenges</p>
+      <i class="fas fa-heart page-icon" style="animation: beat 1s infinite, float 3s ease-in-out infinite;"></i>
+      <div class="memory-grid">
+        <div class="memory-item" style="background: #e1bee7;"></div>
+        <div class="memory-item" style="background: #ce93d8;"></div>
+        <div class="memory-item" style="background: #ba68c8;"></div>
+        <div class="memory-item" style="background: #ab47bc;"></div>
+      </div>
     </div>
 
     <div class="page">
-      <p class="text">
-        Your laughter is the sweetest melody I've ever heard.
-        Even on the toughest days, your giggle brightens everything around me.
-      </p>
+      <h1>Chapter 2</h1>
+      <p class="subtitle">Our Special Moments</p>
+      <div class="text-container">
+        <p class="text">
+          I was insecure and made many mistakes, but I'm so glad I never gave up on us. I'm learning every day, and the
+          most important thing to me is making you smile.
+        </p>
+        <p class="text">
+          I know giving you flowers makes you happy, and that joy lights up my entire day. You're absolutely adorable -
+          I loved how you'd take those 3kg dumbbells at the gym and exercise like the princess you are. Every little
+          thing you do makes me fall for you more.
+        </p>
+      </div>
       <div class="progress-dots">
         <div class="dot"></div>
         <div class="dot"></div>
@@ -763,20 +824,19 @@
 
     <div class="page">
       <h1>Chapter 3</h1>
-      <p class="subtitle">Growing Together</p>
-      <div class="memory-grid">
-        <div class="memory-item" style="background: #e1bee7;"></div>
-        <div class="memory-item" style="background: #ce93d8;"></div>
-        <div class="memory-item" style="background: #ba68c8;"></div>
-        <div class="memory-item" style="background: #ab47bc;"></div>
+      <p class="subtitle">Stronger Together</p>
+      <i class="fas fa-hands-helping page-icon"></i>
+      <div class="text-container">
+        <p class="text">
+          We've learned so much through our mistakes. I understand you're busy with your studies, and I completely
+          support you. I'll always be here for you, my cutie.
+        </p>
+        <p class="text">
+          I promise I'll never give up on us. I'll always be your friend, always listen to you, and we'll communicate
+          through everything. Any problem you have isn't just yours - it's mine too, and we'll fix it together because
+          that's what love means to me.
+        </p>
       </div>
-    </div>
-
-    <div class="page">
-      <p class="text">
-        You inspire me to be better every day. Through your kindness I've found patience,
-        and through your dreams I've found purpose. You make me believe anything is possible.
-      </p>
       <div class="progress-dots">
         <div class="dot"></div>
         <div class="dot"></div>
@@ -788,17 +848,19 @@
 
     <div class="page">
       <h1>Chapter 4</h1>
-      <p class="subtitle">Dreams Ahead</p>
-      <i class="fas fa-star"
-        style="font-size: 3em; color: var(--accent); margin: 15px 0; animation: float 3s ease-in-out infinite;"></i>
-    </div>
-
-    <div class="page">
-      <p class="text">
-        I dream of growing old with you—laughing, learning, loving side by side.
-        Every single moment with you has been special.
-      </p>
-      <p class="ilove">I love you endlessly ❤️</p>
+      <p class="subtitle">Dreaming of Our Future</p>
+      <i class="fas fa-star page-icon"></i>
+      <div class="text-container">
+        <p class="text">
+          I dream of a lifetime with you - laughing together, supporting each other's dreams, and growing old side by
+          side. Every single moment with you has been special, and I cherish them all.
+        </p>
+        <p class="text">
+          Thank you for being you, for your patience, and for letting me be part of your life. I promise to keep
+          bringing you flowers, to keep making you smile, and to love you more each day.
+        </p>
+        <p class="ilove">I love you endlessly ❤️</p>
+      </div>
       <div class="progress-dots">
         <div class="dot"></div>
         <div class="dot"></div>
@@ -812,7 +874,7 @@
       <h1>Surprise!</h1>
       <p class="subtitle">Tap the gift box below</p>
       <div class="gift-box" onclick="openLightbox()">🎁</div>
-      <p style="margin-top: 20px; font-size: 0.9em;">(Make sure your sound is on!)</p>
+      <p style="margin-top: 15px; font-size: 0.9em;">(Make sure your sound is on!)</p>
     </div>
   </div>
 
@@ -824,7 +886,7 @@
   <div class="gift-card">
     <h2>Open Your Special Gift</h2>
     <div class="gift-box" onclick="openLightbox()">🎁</div>
-    <p style="margin-top: 15px;">Click the gift to reveal your surprise</p>
+    <p style="margin-top: 12px; font-size: 0.9em;">Click the gift to reveal your surprise</p>
   </div>
 
   <!-- music player -->
@@ -881,20 +943,47 @@
     rightZone.addEventListener('click', flipNext);
     leftZone.addEventListener('click', flipPrev);
 
-    // swipe support
+    // Improved swipe support
     let startX = 0;
+    let isSwiping = false;
     const book = document.getElementById('book');
-    book.addEventListener('touchstart', e => startX = e.changedTouches[0].screenX);
+    const threshold = 30;
+
+    book.addEventListener('touchstart', e => {
+      startX = e.touches[0].clientX;
+      isSwiping = true;
+    }, { passive: true });
+
+    book.addEventListener('touchmove', e => {
+      if (!isSwiping) return;
+      const currentX = e.touches[0].clientX;
+      const diff = currentX - startX;
+
+      // Prevent vertical scrolling during horizontal swipe
+      if (Math.abs(diff) > 10) {
+        e.preventDefault();
+      }
+    }, { passive: false });
+
     book.addEventListener('touchend', e => {
-      const diff = e.changedTouches[0].screenX - startX;
-      if (diff < -30) flipNext();
-      if (diff > 30) flipPrev();
-    });
+      if (!isSwiping) return;
+      isSwiping = false;
+
+      const endX = e.changedTouches[0].clientX;
+      const diff = endX - startX;
+
+      if (diff < -threshold) flipNext();
+      if (diff > threshold) flipPrev();
+    }, { passive: true });
 
     function openLightbox() {
       lb.classList.add('open');
+      // Start playing at 61 seconds (1:01)
       audio.currentTime = 61;
-      audio.play();
+      audio.play().catch(e => {
+        console.log('Audio play failed:', e);
+        alert('Please tap "OK" then try opening the gift again');
+      });
       createConfetti();
       isMusicPlaying = true;
       musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
@@ -905,101 +994,168 @@
       audio.pause();
     }
 
-    // music toggle
+    // music toggle with better mobile handling
     musicToggle.addEventListener('click', function () {
       if (isMusicPlaying) {
         audio.pause();
         musicToggle.innerHTML = '<i class="fas fa-music"></i>';
       } else {
-        audio.play();
-        musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
+        audio.play().then(() => {
+          musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
+        }).catch(e => {
+          console.log('Audio play failed:', e);
+          alert('Please tap the gift box first to enable music');
+        });
       }
       isMusicPlaying = !isMusicPlaying;
     });
 
-    // generate petals & hearts
-    for (let i = 0; i < 50; i++) {
-      const p = document.createElement('div');
-      p.className = 'petal';
-      p.style.left = Math.random() * 100 + 'vw';
-      p.style.animationDuration = (4 + Math.random() * 4) + 's';
-      p.style.animationDelay = Math.random() * 2 + 's';
-      p.style.opacity = Math.random() * 0.5 + 0.3;
-      p.style.background = `hsl(${Math.random() * 30 + 330}, 100%, 75%)`;
-      document.querySelector('.flowers').append(p);
+    // generate petals & hearts with optimized mobile performance
+    function createFloatingElements() {
+      const flowersContainer = document.querySelector('.flowers');
+      const heartsContainer = document.querySelector('.hearts');
+
+      // Clear existing
+      flowersContainer.innerHTML = '';
+      heartsContainer.innerHTML = '';
+
+      // Create petals (reduced quantity for mobile)
+      for (let i = 0; i < 25; i++) {
+        const p = document.createElement('div');
+        p.className = 'petal';
+        p.style.left = Math.random() * 100 + 'vw';
+        p.style.animationDuration = (3 + Math.random() * 3) + 's';
+        p.style.animationDelay = Math.random() * 2 + 's';
+        p.style.opacity = Math.random() * 0.4 + 0.3;
+        p.style.background = `hsl(${Math.random() * 30 + 330}, 100%, 75%)`;
+        flowersContainer.appendChild(p);
+      }
+
+      // Create hearts (reduced quantity for mobile)
+      for (let i = 0; i < 20; i++) {
+        const h = document.createElement('div');
+        h.className = 'heart';
+        h.style.left = Math.random() * 100 + 'vw';
+        h.style.animationDuration = (2 + Math.random() * 2) + 's';
+        h.style.animationDelay = Math.random() * 1 + 's';
+        h.style.opacity = Math.random() * 0.4 + 0.3;
+        heartsContainer.appendChild(h);
+      }
     }
 
-    for (let i = 0; i < 40; i++) {
-      const h = document.createElement('div');
-      h.className = 'heart';
-      h.style.left = Math.random() * 100 + 'vw';
-      h.style.animationDuration = (3 + Math.random() * 3) + 's';
-      h.style.animationDelay = Math.random() * 1 + 's';
-      h.style.opacity = Math.random() * 0.5 + 0.3;
-      document.querySelector('.hearts').append(h);
-    }
-
-    // create confetti explosion
+    // create confetti explosion with optimized mobile performance
     function createConfetti() {
       const colors = ['#ff6b8b', '#ff8e9e', '#ff4757', '#ffb8c6', '#ff9eb5'];
+      const container = document.createElement('div');
+      container.style.position = 'fixed';
+      container.style.top = '0';
+      container.style.left = '0';
+      container.style.width = '100%';
+      container.style.height = '100%';
+      container.style.pointerEvents = 'none';
+      container.style.zIndex = '2001';
+      document.body.appendChild(container);
 
-      for (let i = 0; i < 100; i++) {
+      // Limit to 50 pieces for mobile performance
+      for (let i = 0; i < 50; i++) {
         const confetti = document.createElement('div');
         confetti.className = 'confetti';
         confetti.style.left = Math.random() * 100 + 'vw';
-        confetti.style.top = Math.random() * 100 + 'vh';
+        confetti.style.top = Math.random() * 20 + 'vh';
         confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
         confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
-        confetti.style.width = Math.random() * 10 + 5 + 'px';
-        confetti.style.height = Math.random() * 10 + 5 + 'px';
+        confetti.style.width = Math.random() * 8 + 4 + 'px';
+        confetti.style.height = Math.random() * 8 + 4 + 'px';
         confetti.style.opacity = '1';
 
-        document.body.appendChild(confetti);
+        container.appendChild(confetti);
 
-        // Animation
-        const animationDuration = Math.random() * 3 + 2;
+        const animationDuration = Math.random() * 2 + 1.5;
         confetti.style.animation = `confettiFall ${animationDuration}s linear forwards`;
-
-        // Create keyframes dynamically
-        const keyframes = `
-          @keyframes confettiFall {
-            0% {
-              transform: translateY(-100vh) rotate(0deg);
-              opacity: 1;
-            }
-            100% {
-              transform: translateY(100vh) rotate(${Math.random() * 360}deg);
-              opacity: 0;
-            }
-          }
-        `;
-
-        const style = document.createElement('style');
-        style.innerHTML = keyframes;
-        document.head.appendChild(style);
 
         // Remove after animation
         setTimeout(() => {
           confetti.remove();
-          style.remove();
         }, animationDuration * 1000);
       }
+
+      // Add keyframes
+      const style = document.createElement('style');
+      style.innerHTML = `
+        @keyframes confettiFall {
+          0% {
+            transform: translateY(-20vh) rotate(0deg);
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(100vh) rotate(${Math.random() * 360}deg);
+            opacity: 0;
+          }
+        }
+      `;
+      document.head.appendChild(style);
+
+      // Clean up
+      setTimeout(() => {
+        container.remove();
+        style.remove();
+      }, 2000);
     }
 
-    // Add decorative elements to pages
+    // Initialize floating elements
+    createFloatingElements();
+
+    // Add decorative elements to pages (fewer for mobile)
     pages.forEach(page => {
-      // Add some random decorative elements
       if (Math.random() > 0.5) {
         const deco = document.createElement('div');
         deco.className = 'page-decoration';
-        deco.style.width = Math.random() * 100 + 50 + 'px';
-        deco.style.height = Math.random() * 100 + 50 + 'px';
+        deco.style.width = Math.random() * 80 + 40 + 'px';
+        deco.style.height = Math.random() * 80 + 40 + 'px';
         deco.style.background = `radial-gradient(circle, rgba(255,107,139,0.1) 0%, rgba(255,107,139,0) 70%)`;
         deco.style.top = Math.random() * 80 + 10 + '%';
         deco.style.left = Math.random() * 80 + 10 + '%';
         page.appendChild(deco);
       }
     });
+
+    // Better mobile viewport handling
+    function adjustViewport() {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+
+      // Adjust book height based on screen
+      const book = document.querySelector('.book');
+      if (window.innerHeight < 600) {
+        book.style.height = '55vh';
+      } else {
+        book.style.height = '65vh';
+      }
+    }
+
+    window.addEventListener('resize', adjustViewport);
+    window.addEventListener('orientationchange', adjustViewport);
+    adjustViewport();
+
+    // Ensure all pages are properly aligned
+    function checkPageContentFit() {
+      pages.forEach(page => {
+        const textContainer = page.querySelector('.text-container');
+        if (textContainer) {
+          const contentHeight = textContainer.scrollHeight;
+          const containerHeight = textContainer.clientHeight;
+
+          if (contentHeight > containerHeight) {
+            textContainer.style.justifyContent = 'flex-start';
+          } else {
+            textContainer.style.justifyContent = 'center';
+          }
+        }
+      });
+    }
+
+    // Run check after short delay to allow rendering
+    setTimeout(checkPageContentFit, 300);
   </script>
 </body>
 
